@@ -24,7 +24,7 @@ jobs:
 
     - name: Extract branch name
       shell: bash
-      run: echo "::set-output name=sha_short::$(git rev-parse --short=7 HEAD)"
+      run: echo "::set-output name=sha_short::$(git rev-parse --short=6 HEAD)"
       id: commit
 
     - name: Build node-hello docker image
@@ -52,15 +52,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Debug
-      run: echo ${{ steps.commit.outputs.sha_short }}
+    - name: Docker tag
+      run: |
+       docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+       docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.commit.outputs.sha_short }}-${{ github.run_number }}
 
-#    - name: docker tag
-#      run: |
-#        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
-#        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}
-
-#    - name: Push docker image
-#      run: |
-#        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest  
-#        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}
+    - name: Push docker image
+      run: |
+       docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest  
+       docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.commit.outputs.sha_short }}-${{ github.run_number }}

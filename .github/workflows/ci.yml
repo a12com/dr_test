@@ -6,15 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    services:
-      node:
-        image: node:14
-        env:
-          CI: true
-        ports:
-          - 3000:3000
-
+  
     steps:
     
     - name: Check out node-hello repo

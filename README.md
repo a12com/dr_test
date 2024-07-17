@@ -24,7 +24,7 @@ This section focuses on creating a CI/CD pipeline using GitHub Actions.
 3. The pipeline should be able to build the Docker image.
 4. It should also push the image to Docker Hub.
 
-Please ensure to provide the YAML file for the GitHub Actions pipeline.
+Please ensure to provide the YAML file for the GitHub Actions pipeline (https://github.com/a12com/dr_test/blob/main/.github/workflows/ci.yml)
 
 ### Part 3: Working with Helm and Terraform
 

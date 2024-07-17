@@ -19,6 +19,7 @@ jobs:
     
     - name: Check out node-hello repo
       uses: actions/checkout@master
+      id: checkout
       with:
         repository: a12com/dr_test
 
@@ -48,7 +49,11 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: docker tag
-      run: docker tag node-hello:latest ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+      run: |
+        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}
 
     - name: Push docker image
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+      run: |
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest  
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}

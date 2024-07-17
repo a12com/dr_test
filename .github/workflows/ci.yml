@@ -19,9 +19,13 @@ jobs:
     
     - name: Check out node-hello repo
       uses: actions/checkout@master
-      id: checkout
       with:
         repository: a12com/dr_test
+
+    - name: Extract branch name
+      shell: bash
+      run: echo "::set-output name=sha_short::$(git rev-parse --short=7 HEAD)"
+      id: commit
 
     - name: Build node-hello docker image
       run: docker build -t node-hello .
@@ -49,7 +53,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Debug
-      run: echo ${{ steps.checkout.outputs.GITHUB_SHA }}
+      run: echo ${{ steps.commit.outputs.sha_short }}
 
 #    - name: docker tag
 #      run: |

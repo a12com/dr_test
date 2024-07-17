@@ -11,7 +11,7 @@ This section will guide you on how to build and run a simple Node.js application
 1. Create a simple Dockerfile for the Node.js application.
 2. Build a Docker image from this Dockerfile.
 3. Run a container from the created image and ensure the application works.
-4. Push the created Docker image to Docker Hub.
+4. Push the created Docker image to Docker Hub (pushed to https://hub.docker.com/r/a12com/node-hello)
 
 Please ensure to provide the link to the Docker image.
 

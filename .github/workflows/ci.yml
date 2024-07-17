@@ -6,6 +6,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    services:
+      node:
+        image: node:14
+        env:
+          CI: true
+        ports:
+          - 3000:3000
+
     steps:
     
     - name: Check out node-hello repo
@@ -13,5 +22,33 @@ jobs:
       with:
         repository: a12com/dr_test
 
-    - name: List files
-      run: ls -lahr
+    - name: Build node-hello docker image
+      run: docker build -t node-hello .
+      working-directory: ./images/node
+
+    - name: Run docker image
+      run: docker run -d -p 8888:8888 node-hello
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '22'
+
+    - name: Install Dependencies
+      run: npm ci
+      working-directory: ./test
+
+    - name: Run tests
+      run: npm test
+      working-directory: ./test
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: docker tag
+      run: docker tag node-hello:latest ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+
+    - name: Push docker image
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest

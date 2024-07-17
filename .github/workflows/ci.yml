@@ -1,0 +1,17 @@
+name: Docker build & push
+
+on: workflow_call
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Check out node-hello repo
+      uses: actions/checkout@master
+      with:
+        repository: a12com/dr_test
+
+    - name: List files
+      run: ls -lahr

@@ -14,4 +14,4 @@ jobs:
         repository: a12com/dr_test
 
     - name: List files
-      uses: ls -lahr
+      run: ls -lahr

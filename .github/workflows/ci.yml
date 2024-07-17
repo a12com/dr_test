@@ -49,7 +49,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Debug
-      run: echo ${{ steps.checkout.outputs }}
+      run: echo ${{ steps.checkout.outputs }} | jq
 
 #    - name: docker tag
 #      run: |

@@ -48,12 +48,15 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: docker tag
-      run: |
-        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
-        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}
+    - name: Debug
+      run: echo ${{ steps.checkout.outputs }}
 
-    - name: Push docker image
-      run: |
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest  
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}
+#    - name: docker tag
+#      run: |
+#        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+#        docker tag node-hello ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}
+
+#    - name: Push docker image
+#      run: |
+#        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest  
+#        docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:${{ steps.checkout.outputs.GITHUB_SHA.substring(0,6) }}-${{ github.run_number }}

@@ -24,7 +24,7 @@ This section focuses on creating a CI/CD pipeline using GitHub Actions.
 3. The pipeline should be able to build the Docker image.
 4. It should also push the image to Docker Hub.
 
-Please ensure to provide the YAML file for the GitHub Actions pipeline (https://github.com/a12com/dr_test/blob/main/.github/workflows/ci.yml)
+Please ensure to provide the YAML file for the GitHub Actions pipeline 
 
 ### Part 3: Working with Helm and Terraform
 
@@ -45,3 +45,27 @@ In this section, you will be deploying the Node.js application in a Kubernetes c
 - All parts of the task should be completed and documented in a single GitHub repository.
 - The repository should include a README file detailing all steps to reproduce the tasks.
 - Provide the link to the repository upon completion of the task.
+
+# How to use
+
+## Docker
+
+1. docker pull a12com/node-hello
+Following step will start container and attach it to 8888 port of host machine:
+3. docker run -p 8888:8888 -d a12com/node-hello
+Test on any *nix OS:
+4. curl localhost:8888
+Test on windows (start > powershell):
+4. Invoke-WebRequest -Uri "http://localhost:8888"
+
+## CI
+
+1. To test, firstly copy (https://github.com/a12com/dr_test/blob/main/.github/workflows/ci.yml) to your repo into .github/workflows folder
+2. In Settings add DOCKERHUB_USERNAME and DOCKERHUB_TOKEN secrets
+3. In Actions run Docker build & push
+
+## CD
+
+1. Follow these instrunctions to deploy AKS using terraform https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-terraform?pivots=development-environment-azure-cli
+2. Follow these instruction to login to AKS https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-terraform?pivots=development-environment-azure-cli
+3. cd helm/node-hello && helm upgrade -i --create-namespace --namespace node node-hello .
